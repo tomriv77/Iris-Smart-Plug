@@ -149,7 +149,11 @@ def calculateAndShowEnergy()
     def energyValue = device.currentValue("energy") 
     if(energyValue) {
     	energyValue += (recentEvents[1].value * deltaT) / 1000 // energy used since last "power" event in kWh 
+    } else {
+    	energyValue = (recentEvents[1].value * deltaT) / 1000 // energy used since last "power" event in kWh
     }
+    
+    //log.debug "deltaT: ${deltaT}, energyValue: ${deltaT * recentEvents[1].value}, recentEvents: ${recentEvents[1].value}"
     
     sendEvent(name: "energy", value: energyValue, displayed: false)
     sendEvent(name: "energyDisplay", value: String.format("%6.3f kWh",energyValue), displayed: true)
